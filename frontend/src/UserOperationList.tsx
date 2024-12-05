@@ -12,7 +12,9 @@ export const UserOperationList: React.FC = () => {
   const fetchOperations = async () => {
     try {
       const response = await axios.get('http://localhost:3000/api/operations');
-      setOperations(response.data);
+      if (JSON.stringify(response.data) !== JSON.stringify(operations)) {
+        setOperations(response.data);
+      }
       setError(null);
     } catch (err) {
       setError('Failed to fetch operations');
@@ -23,7 +25,7 @@ export const UserOperationList: React.FC = () => {
 
   useEffect(() => {
     fetchOperations();
-    const interval = setInterval(fetchOperations, 10000); // Refresh every 10 seconds
+    const interval = setInterval(fetchOperations, 12000); 
     return () => clearInterval(interval);
   }, []);
 
